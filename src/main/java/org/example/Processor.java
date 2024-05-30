@@ -19,7 +19,7 @@ public class Processor implements Runnable {
         this.request = request;
     }
 
-    public void process()  {
+    private void process()  {
         String responseText = "Response to " + MessageType.values()[request.getcType()].name() + ": ok";
         Message response = new Message(request.getcType(), request.getbUserId(), responseText);
 

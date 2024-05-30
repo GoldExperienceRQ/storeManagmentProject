@@ -12,7 +12,7 @@ public class Decryptor implements Runnable{
         this.message = message;
     }
 
-    public void decryptMessage() {
+    private void decryptMessage() {
 
         byte[] decipheredMessage = decipher(message);
 

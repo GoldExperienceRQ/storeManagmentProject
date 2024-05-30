@@ -13,7 +13,7 @@ public class Encryptor implements Runnable{
     public Encryptor(Message response) {
         this.response = response;
     }
-    public void encryptMessage() throws UnknownHostException {
+    private void encryptMessage() throws UnknownHostException {
         ByteBuffer buffer = ByteBuffer.allocate(8 + response.getText().length());
         buffer.putInt(response.getcType());
         buffer.putInt(response.getbUserId());
@@ -42,6 +42,10 @@ public class Encryptor implements Runnable{
         } catch (UnknownHostException  e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String encrypt(String s) {
+        return null;
     }
 }
 
