@@ -1,7 +1,10 @@
 package org.example;
 
+import org.example.sockets.StoreServerTCP;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
@@ -26,14 +29,8 @@ public class App {
             return cipher.doFinal(mess);
         }catch(Exception e){throw new RuntimeException(e);}
     }
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
 
-        Message message1 = new Message(3, 1, "Cereals");
-        Message message2 = new Message(4, 2, "Hrechka");
 
-        Receiver receiver = new Receiver();
-        receiver.receiveMessage(encode(message1));
-        Thread.sleep(2);
-        receiver.receiveMessage(encode(message2));
     }
 }
