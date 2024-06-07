@@ -2,9 +2,10 @@ package org.example;
 
 import java.net.UnknownHostException;
 
-public class Processor implements Runnable {
+public class Processor{
 
     private enum MessageType {
+        END_PROCESS,
         COUNT_PRODUCT,
         SUBTRACT_PRODUCT,
         ADD_PRODUCT,
@@ -13,25 +14,11 @@ public class Processor implements Runnable {
         SET_PRICE,
     }
 
-    private final Message request;
 
-    public Processor(Message request) {
-        this.request = request;
+    public static Message process(Message message)  {
+        String responseText = "Response to " + MessageType.values()[message.getcType()].name() + " " + message.getText() + ": ok";
+
+        return new Message(message.getcType(), message.getbUserId(), responseText);
     }
 
-    private void process()  {
-        String responseText = "Response to " + MessageType.values()[request.getcType()].name() + ": ok";
-        Message response = new Message(request.getcType(), request.getbUserId(), responseText);
-
-        System.out.println("Response text: " + response.getText());
-
-        Thread encryption = new Thread(new Encryptor(response));
-        encryption.start();
-
-    }
-
-    @Override
-    public void run() {
-        process();
-    }
 }

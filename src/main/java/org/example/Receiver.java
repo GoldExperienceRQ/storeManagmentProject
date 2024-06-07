@@ -1,20 +1,22 @@
 package org.example;
 
-public class Receiver{
-    private static int messageNum = 1;
+import org.example.sockets.StoreServerTCP;
+import org.example.sockets.StoreServerUDP;
 
+import java.io.IOException;
+
+public class Receiver{
 
     public Receiver() {
     }
 
-    public void receiveMessage(byte[] message) {
-        if (message == null) {
-            throw new IllegalArgumentException("Message cannot be null");
-        }
-        System.out.println("Running: Message " + messageNum);
-        messageNum++;
-        Thread decryption = new Thread(new Decryptor(message));
-        decryption.start();
+    public void receiveMessage() throws IOException {
+
+//            server.start(6666);
+//            System.out.println("Socket is closed");
+
+        StoreServerUDP serverUDP = new StoreServerUDP();
+        serverUDP.start(7777);
     }
 
 }
