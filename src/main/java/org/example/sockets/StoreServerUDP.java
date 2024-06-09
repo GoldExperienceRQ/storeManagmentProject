@@ -10,7 +10,7 @@ import java.net.*;
 
 public class StoreServerUDP {
     private byte[] buf = new byte[256];
-
+    private int ACK_BUFFER_SIZE = 16;
     public void start(int port){
         System.out.println("UDP Server is running on port " + port);
         try(DatagramSocket serverSocket = new DatagramSocket(port)){
@@ -30,7 +30,6 @@ public class StoreServerUDP {
     private static class UDPPacketHandler extends Thread{
         DatagramPacket packet;
         DatagramSocket serverSocket;
-
         public UDPPacketHandler(DatagramPacket packet, DatagramSocket serverSocket){
             this.packet = packet;
             this.serverSocket = serverSocket;
@@ -41,6 +40,7 @@ public class StoreServerUDP {
             System.out.println("Processing packet..");
             InetAddress clientAddress = packet.getAddress();
             int clientPort = packet.getPort();
+
             byte[] received = new byte[packet.getLength()];
 
             System.arraycopy(packet.getData(), packet.getOffset(), received, 0, packet.getLength());

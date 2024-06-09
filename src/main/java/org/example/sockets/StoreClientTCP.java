@@ -5,15 +5,17 @@ import org.example.*;
 
 import java.io.*;
 import java.net.*;
+import java.nio.channels.InterruptedByTimeoutException;
 
 
 public class StoreClientTCP {
     private Socket clientSocket;
     private DataOutputStream out;
     private DataInputStream in;
-
+    private int port;
     public void startConnection(String ip, int port) throws IOException {
-        clientSocket = new Socket(ip, port);
+        this.port = port;
+        clientSocket = new Socket(ip, this.port);
         out = new DataOutputStream(clientSocket.getOutputStream());
         in = new DataInputStream(clientSocket.getInputStream());
     }
@@ -21,14 +23,28 @@ public class StoreClientTCP {
 
     }
     public byte[] sendMessage(Message msg) throws IOException {
-        byte[] req = Encryptor.encryptMessage(msg);
-        out.writeInt(req.length);
-        out.write(req);
+        while(true) {
+            try {
+                byte[] req = Encryptor.encryptMessage(msg);
+                out.writeInt(req.length);
+                out.write(req);
 
-        int length = in.readInt();
-        byte[] res = new byte[length];
-        in.readFully(res);
-        return res;
+                int length = in.readInt();
+                byte[] res = new byte[length];
+                in.readFully(res);
+                return res;
+            }catch(IOException e){
+                System.out.println("Server is down, retrying connection...");
+                try {
+                    Thread.sleep(1000);
+                }catch (InterruptedException ex){
+                    throw new RuntimeException(ex);
+                }
+                startConnection("127.0.0.1", this.port);
+            }
+
+
+        }
     }
     public void stopConnection() throws IOException {
         in.close();
