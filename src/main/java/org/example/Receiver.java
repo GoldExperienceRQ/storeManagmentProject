@@ -12,11 +12,12 @@ public class Receiver{
 
     public void receiveMessage() throws IOException {
 
-//            server.start(6666);
-//            System.out.println("Socket is closed");
+            StoreServerTCP server = new StoreServerTCP();
+            server.start(6666);
+            System.out.println("Socket is closed");
 
-        StoreServerUDP serverUDP = new StoreServerUDP();
-        serverUDP.start(7777);
+//        StoreServerUDP serverUDP = new StoreServerUDP();
+//        serverUDP.start(7777);
     }
 
 }

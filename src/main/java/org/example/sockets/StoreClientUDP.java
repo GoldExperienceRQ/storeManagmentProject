@@ -11,27 +11,30 @@ import java.util.Arrays;
 public class StoreClientUDP {
     private InetAddress serverAddress;
     private int BUFFER_SIZE = 256;
+    private int ACK_BUFFER_SIZE = 16;
     public byte[] sendMessage(Message message, int port) throws SocketException {
         try(DatagramSocket clientSocket = new DatagramSocket()){
             serverAddress = InetAddress.getByName("localhost");
             byte[] sendBuffer = Encryptor.encryptMessage(message);
             DatagramPacket sendPacket = new DatagramPacket(sendBuffer, sendBuffer.length, serverAddress, port);
 
-           clientSocket.send(sendPacket);
-
-            byte[] receiveBuffer = new byte[BUFFER_SIZE];
-            DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
-            clientSocket.receive(receivePacket);
-
-            byte[] received = new byte[receivePacket.getLength()];
-            System.arraycopy(receivePacket.getData(), receivePacket.getOffset(), received, 0, receivePacket.getLength());
-
-
-            return received;
+            while(true) {
+                clientSocket.send(sendPacket);
+                clientSocket.setSoTimeout(1000);
+                try {
+                    byte[] receiveBuffer = new byte[BUFFER_SIZE];
+                    DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);
+                    clientSocket.receive(receivePacket);
+                    byte[] received = new byte[receivePacket.getLength()];
+                    System.arraycopy(receivePacket.getData(), receivePacket.getOffset(), received, 0, receivePacket.getLength());
+                    return received;
+                } catch (SocketTimeoutException e) {
+                    System.out.println("Resending message...");
+                }
+            }
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static void main(String[] args) throws IOException {
