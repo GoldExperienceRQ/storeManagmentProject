@@ -40,7 +40,6 @@ public class StoreServerTCP {
                 int length;
                 while((length = in.readInt()) != -1) {
                     System.out.println();
-                    System.out.println("Circle one");
                     byte[] req = new byte[length];
                     in.readFully(req);
 
@@ -53,7 +52,7 @@ public class StoreServerTCP {
                     out.writeInt(res.length);
                     out.write(res);
                     System.out.println("Everything is written");
-                    if(message.getText().equals("end")){
+                    if(message.getcType() == 0){
                         break;
                     }
                 }

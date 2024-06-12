@@ -38,16 +38,16 @@ public class StoreClientUDP {
     }
 
     public static void main(String[] args) throws IOException {
-        StoreClientUDP client1 = new StoreClientUDP();
-        byte[] res1 = client1.sendMessage(new Message(1,1,"Hrechka"), 7777);
-        byte[] res2 = client1.sendMessage(new Message(2,2,"Voda"), 7777);
-        System.out.println(Decryptor.decryptMessage(res1).getText());
-        System.out.println(Decryptor.decryptMessage(res2).getText());
-
-        StoreClientUDP client2 = new StoreClientUDP();
-        byte[] res3 = client2.sendMessage(new Message(3,3,"Kartoplia"), 7777);
-        byte[] res4 = client2.sendMessage(new Message(4,4,"Miaso"), 7777);
-        System.out.println(Decryptor.decryptMessage(res3).getText());
-        System.out.println(Decryptor.decryptMessage(res4).getText());
+//        StoreClientUDP client1 = new StoreClientUDP();
+//        byte[] res1 = client1.sendMessage(new Message(1,1,"Hrechka"), 7777);
+//        byte[] res2 = client1.sendMessage(new Message(2,2,"Voda"), 7777);
+//        System.out.println(Decryptor.decryptMessage(res1).getText());
+//        System.out.println(Decryptor.decryptMessage(res2).getText());
+//
+//        StoreClientUDP client2 = new StoreClientUDP();
+//        byte[] res3 = client2.sendMessage(new Message(3,3,"Kartoplia"), 7777);
+//        byte[] res4 = client2.sendMessage(new Message(4,4,"Miaso"), 7777);
+//        System.out.println(Decryptor.decryptMessage(res3).getText());
+//        System.out.println(Decryptor.decryptMessage(res4).getText());
     }
 }

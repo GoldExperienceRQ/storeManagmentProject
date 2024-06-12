@@ -17,12 +17,15 @@ public class Decryptor{
         ByteBuffer buffer = ByteBuffer.wrap(decipheredRequest);
         int cType = buffer.getInt();
         int bUserId = buffer.getInt();
+        int product_id = buffer.getInt();
+        int price = buffer.getInt();
+        int quantity = buffer.getInt();
         byte[] textInBytes = new byte[buffer.remaining()];
         buffer.get(textInBytes);
 
         String text = new String(textInBytes);
 
-        return new Message(cType, bUserId, text);
+        return new Message.Builder(bUserId, cType, text).product_id(product_id).price(price).quantity(quantity).build();
 
     }
 

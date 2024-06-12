@@ -8,9 +8,12 @@ public class Encryptor{
 
 
     public static byte[] encryptMessage(Message message) {
-        ByteBuffer buffer = ByteBuffer.allocate(8 + message.getText().length());
+        ByteBuffer buffer = ByteBuffer.allocate(20 + message.getText().length());
         buffer.putInt(message.getcType());
         buffer.putInt(message.getbUserId());
+        buffer.putInt(message.getProduct_id());
+        buffer.putInt(message.getPrice());
+        buffer.putInt(message.getQuantity());
         buffer.put(message.getText().getBytes());
 
 
