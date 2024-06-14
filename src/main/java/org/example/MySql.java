@@ -7,8 +7,8 @@ public class MySql {
 
     public void initialize(String name, String user, String password) {
         try {
-            con = DriverManager.getConnection("jdbc:mysql://" + name, "root",
-                    "my_sql");
+            con = DriverManager.getConnection("jdbc:mysql://" + name, user,
+                    password);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
